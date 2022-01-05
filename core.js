@@ -41,10 +41,33 @@ function bits_to_string(bits) {
   return char_buffer.join('')
 }
 
+function string_to_bits(string, bits_len = string.length * 5) {
+  let bits = new Uint8Array(bits_len)
+  let string_len = string.length
+  for (
+    let string_index = 0, bit_index = 0;
+    string_index < string_len;
+    string_index++
+  ) {
+    let char = string[string_index]
+    let code = char_to_code[char]
+    for (let i = N_BIT - 1; i >= 0 && bit_index < bits_len; i--) {
+      bits[bit_index + i] = code & 1
+      code = code >> 1
+    }
+    bit_index += N_BIT
+  }
+  return bits
+}
+
 function bytes_to_bits(bytes) {
-  let byte_len = bytes.length
-  let bits = new Uint8Array(byte_len * 8)
-  for (let byte_index = 0, bit_index = 0; byte_index < byte_len; byte_index++) {
+  let bytes_len = bytes.length
+  let bits = new Uint8Array(bytes_len * 8)
+  for (
+    let byte_index = 0, bit_index = 0;
+    byte_index < bytes_len;
+    byte_index++
+  ) {
     let byte = bytes[byte_index]
     for (let i = 7; i >= 0; i--) {
       bits[bit_index + i] = byte & 1
@@ -55,10 +78,30 @@ function bytes_to_bits(bytes) {
   return bits
 }
 
+function bits_to_bytes(bits) {
+  let bits_len = bits.length
+  let byte_len = Math.ceil(bits_len / 8)
+  let bytes = new Uint8Array(byte_len)
+  for (let byte_index = 0, bit_index = 0; bit_index < bits_len; byte_index++) {
+    let byte = 0
+    for (let i = 7; i >= 0 && bit_index < bits_len; i--, bit_index++) {
+      byte = (byte << 1) | bits[bit_index]
+    }
+    bytes[byte_index] = byte
+  }
+  return bytes
+}
+
 function bytes_to_string(bytes) {
   let bits = bytes_to_bits(bytes)
   let string = bits_to_string(bits)
   return string
+}
+
+function string_to_bytes(string, bits_len) {
+  let bits = string_to_bits(string, bits_len)
+  let bytes = bits_to_bytes(bits)
+  return bytes
 }
 
 function binary_string_to_bits(binary_string) {
@@ -79,27 +122,26 @@ function binary_string_to_bits(binary_string) {
   return bits
 }
 
+function bytes_to_binary_string(bytes) {
+  let bytes_len = bytes.length
+  let string = ''
+  for (let i = 0; i < bytes_len; i++) {
+    string += String.fromCharCode(bytes[i])
+  }
+  return string
+}
+
 function binary_string_to_string(binary_string) {
   let bits = binary_string_to_bits(binary_string)
   let string = bits_to_string(bits)
   return string
 }
 
-function string_to_bits(string, bits_len = string.length * 5) {
-  let bits = new Uint8Array(bit_length)
-  let string_len = string.length
-  for (
-    let string_index = 0, bit_index = 0;
-    string_index < string_len;
-    string_index++
-  ) {
-    let char = string[string_index]
-    let code = char_to_code[char]
-    for (let i = N_BIT - 1; i >= 0 && bit_index < bits_len; i--) {
-      bits[bit_index + i] = code & 1
-      code = code >> 1
-    }
-    bit_index += N_BIT
-  }
-  return bits
+function test() {
+  let binary_string = 'apple'
+  let string = binary_string_to_string(binary_string)
+  let bytes = string_to_bytes(string)
+  let res = bytes_to_binary_string(bytes)
+  console.log(res)
 }
+test()
