@@ -1,11 +1,11 @@
-let char_to_code = {}
+let char_to_code: Record<string, number> = {}
 
 // 0 -> o
 // l -> 1 or i
 // v -> u or r
 // 2 -> z
 
-let code_to_char = []
+let code_to_char: string[] = []
 for (let i = 0; i < 10; i++) {
   code_to_char.push(i.toString())
 }
@@ -26,7 +26,7 @@ for (let code = 0; code < code_to_char.length; code++) {
 
 const N_BIT = Math.log2(code_to_char.length)
 
-function bits_to_string(bits) {
+export function bits_to_string(bits: ArrayLike<number>) {
   let bits_len = bits.length
   let string_len = Math.ceil(bits_len / N_BIT)
   let char_buffer = new Array(string_len)
@@ -41,7 +41,7 @@ function bits_to_string(bits) {
   return char_buffer.join('')
 }
 
-function string_to_bits(string, bits_len = string.length * 5) {
+export function string_to_bits(string: string, bits_len = string.length * 5) {
   let bits = new Uint8Array(bits_len)
   let string_len = string.length
   for (
@@ -60,7 +60,7 @@ function string_to_bits(string, bits_len = string.length * 5) {
   return bits
 }
 
-function bytes_to_bits(bytes) {
+export function bytes_to_bits(bytes: ArrayLike<number>) {
   let bytes_len = bytes.length
   let bits = new Uint8Array(bytes_len * 8)
   for (
@@ -78,7 +78,7 @@ function bytes_to_bits(bytes) {
   return bits
 }
 
-function bits_to_bytes(bits) {
+export function bits_to_bytes(bits: ArrayLike<number>) {
   let bits_len = bits.length
   let byte_len = Math.ceil(bits_len / 8)
   let bytes = new Uint8Array(byte_len)
@@ -92,19 +92,19 @@ function bits_to_bytes(bits) {
   return bytes
 }
 
-function bytes_to_string(bytes) {
+export function bytes_to_string(bytes: ArrayLike<number>) {
   let bits = bytes_to_bits(bytes)
   let string = bits_to_string(bits)
   return string
 }
 
-function string_to_bytes(string, bits_len) {
+export function string_to_bytes(string: string, bits_len?: number) {
   let bits = string_to_bits(string, bits_len)
   let bytes = bits_to_bytes(bits)
   return bytes
 }
 
-function binary_string_to_bits(binary_string) {
+export function binary_string_to_bits(binary_string: string) {
   let byte_len = binary_string.length
   let bits = new Uint8Array(byte_len * 8)
   for (
@@ -122,7 +122,7 @@ function binary_string_to_bits(binary_string) {
   return bits
 }
 
-function bytes_to_binary_string(bytes) {
+export function bytes_to_binary_string(bytes: ArrayLike<number>) {
   let bytes_len = bytes.length
   let string = ''
   for (let i = 0; i < bytes_len; i++) {
@@ -131,17 +131,8 @@ function bytes_to_binary_string(bytes) {
   return string
 }
 
-function binary_string_to_string(binary_string) {
+export function binary_string_to_string(binary_string: string) {
   let bits = binary_string_to_bits(binary_string)
   let string = bits_to_string(bits)
   return string
 }
-
-function test() {
-  let binary_string = 'apple'
-  let string = binary_string_to_string(binary_string)
-  let bytes = string_to_bytes(string)
-  let res = bytes_to_binary_string(bytes)
-  console.log(res)
-}
-test()
