@@ -2,9 +2,18 @@
   "name": "base32",
   "version": "1.0.0",
   "description": "encode binary data in base32",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "base32",
+    "encode",
+    "decode",
+    "readability"
+  ],
+  "author": {
+    "name": "Beeno Tung",
+    "email": "aabbcc1241@yahoo.com.hk",
+    "url": "https://beeno-tung.surge.sh"
+  },
+  "license": "BSD-2-Clause",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beenotung/base32.git"
