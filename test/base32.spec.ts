@@ -10,6 +10,5 @@ it('e2e test', () => {
   let string = binary_string_to_string(binary_string)
   let bytes = string_to_bytes(string)
   let res = bytes_to_binary_string(bytes)
-  console.log(res)
   expect(res).to.equals('apple')
 })
