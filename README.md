@@ -1,6 +1,6 @@
 # base32
 
-encode binary data in base32
+encode binary data in human-friendly base32 format
 
 Inspired from https://philzimmermann.com/docs/human-oriented-base-32-encoding.txt
 

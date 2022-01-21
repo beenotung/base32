@@ -6,6 +6,7 @@
     "base32",
     "encode",
     "decode",
+    "human-friendly",
     "readability"
   ],
   "author": {
