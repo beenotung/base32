@@ -14,8 +14,25 @@ Inspired from https://philzimmermann.com/docs/human-oriented-base-32-encoding.tx
 - Do not need padding characters
   - Results in shorter encoded text
   - The length may be already known in the context, e.g. sha1://xxxx or md5://xxxx
-  - The length can be stated explicitly, e.g. 256:xxxx
+  - The length can be stored externally explicitly, e.g. 256:xxxx
 
+
+## Typescript Type Signatures
+```typescript
+// end-to-end encode/decode functions
+export function binary_string_to_base32_string(binary_string: string): string;
+export function base32_string_to_binary_string(string: string, bits_len?: number): string;
+
+// helper functions
+export function binary_string_to_bits(binary_string: string): Uint8Array;
+export function bits_to_base32_string(bits: ArrayLike<number>): string;
+export function bits_to_bytes(bits: ArrayLike<number>): Uint8Array;
+export function bytes_to_bits(bytes: ArrayLike<number>): Uint8Array;
+export function bytes_to_binary_string(bytes: ArrayLike<number>): string;
+export function bytes_to_base32_string(bytes: ArrayLike<number>): string;
+export function base32_string_to_bytes(string: string, bits_len?: number): Uint8Array;
+export function base32_string_to_bits(string: string, bits_len?: number): Uint8Array;
+```
 
 ## License
 
