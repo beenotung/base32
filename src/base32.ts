@@ -21,12 +21,13 @@ for (let char of skip_char_list) {
 }
 for (let code = 0; code < code_to_char.length; code++) {
   let char = code_to_char[code]
-  char_to_code[char] = code
+  char_to_code[char.toLowerCase()] = code
+  char_to_code[char.toUpperCase()] = code
 }
 
 const N_BIT = Math.log2(code_to_char.length)
 
-export function bits_to_string(bits: ArrayLike<number>) {
+export function bits_to_base32_string(bits: ArrayLike<number>) {
   let bits_len = bits.length
   let string_len = Math.ceil(bits_len / N_BIT)
   let char_buffer = new Array(string_len)
@@ -41,7 +42,7 @@ export function bits_to_string(bits: ArrayLike<number>) {
   return char_buffer.join('')
 }
 
-export function string_to_bits(string: string, bits_len = string.length * 5) {
+export function base32_string_to_bits(string: string, bits_len = string.length * 5) {
   let bits = new Uint8Array(bits_len)
   let string_len = string.length
   for (
@@ -92,14 +93,14 @@ export function bits_to_bytes(bits: ArrayLike<number>) {
   return bytes
 }
 
-export function bytes_to_string(bytes: ArrayLike<number>) {
+export function bytes_to_base32_string(bytes: ArrayLike<number>) {
   let bits = bytes_to_bits(bytes)
-  let string = bits_to_string(bits)
+  let string = bits_to_base32_string(bits)
   return string
 }
 
-export function string_to_bytes(string: string, bits_len?: number) {
-  let bits = string_to_bits(string, bits_len)
+export function base32_string_to_bytes(string: string, bits_len?: number) {
+  let bits = base32_string_to_bits(string, bits_len)
   let bytes = bits_to_bytes(bits)
   return bytes
 }
@@ -131,8 +132,14 @@ export function bytes_to_binary_string(bytes: ArrayLike<number>) {
   return string
 }
 
-export function binary_string_to_string(binary_string: string) {
+export function binary_string_to_base32_string(binary_string: string) {
   let bits = binary_string_to_bits(binary_string)
-  let string = bits_to_string(bits)
+  let string = bits_to_base32_string(bits)
   return string
+}
+
+export function base32_string_to_binary_string(string: string, bits_len?: number) {
+  let bytes = base32_string_to_bytes(string, bits_len)
+  let binary_string = bytes_to_binary_string(bytes)
+  return binary_string
 }

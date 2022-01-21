@@ -1,14 +1,26 @@
 import { expect } from 'chai'
 import {
-  binary_string_to_string,
-  string_to_bytes,
-  bytes_to_binary_string,
+  binary_string_to_base32_string,
+  base32_string_to_binary_string,
 } from '../src/base32'
 
 it('e2e test', () => {
   let binary_string = 'apple'
-  let string = binary_string_to_string(binary_string)
-  let bytes = string_to_bytes(string)
-  let res = bytes_to_binary_string(bytes)
-  expect(res).to.equals('apple')
+  let base32 = binary_string_to_base32_string(binary_string)
+  let res = base32_string_to_binary_string(base32)
+  expect(res).to.equals(binary_string)
+})
+
+it('should be case insensitive', () => {
+  let text = 'apple'
+  let base32 = binary_string_to_base32_string(text)
+  expect(base32).to.match(/[a-zA-Z]/)
+  expect(base32_string_to_binary_string(base32.toLowerCase())).to.equals(text)
+  expect(base32_string_to_binary_string(base32.toUpperCase())).to.equals(text)
+})
+
+it('should output base32 in lower case', () => {
+  let base32 = binary_string_to_base32_string('apple')
+  expect(base32).to.match(/[a-z]/)
+  expect(base32).not.to.match(/[A-Z]/)
 })
