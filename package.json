@@ -27,6 +27,9 @@
   "types": "dist/base32.d.ts",
   "module": "dist/esm.js",
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "ts-mocha test/*.spec.ts",
     "build": "run-s clean transpile",
