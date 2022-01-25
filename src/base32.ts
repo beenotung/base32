@@ -42,7 +42,10 @@ export function bits_to_base32_string(bits: ArrayLike<number>) {
   return char_buffer.join('')
 }
 
-export function base32_string_to_bits(string: string, bits_len = string.length * 5) {
+export function base32_string_to_bits(
+  string: string,
+  bits_len = string.length * 5,
+) {
   let bits = new Uint8Array(bits_len)
   let string_len = string.length
   for (
@@ -52,6 +55,9 @@ export function base32_string_to_bits(string: string, bits_len = string.length *
   ) {
     let char = string[string_index]
     let code = char_to_code[char]
+    if (code === undefined) {
+      throw new Error(`Invalid character: "${char}"`)
+    }
     for (let i = N_BIT - 1; i >= 0 && bit_index < bits_len; i--) {
       bits[bit_index + i] = code & 1
       code = code >> 1
@@ -138,7 +144,10 @@ export function binary_string_to_base32_string(binary_string: string) {
   return string
 }
 
-export function base32_string_to_binary_string(string: string, bits_len?: number) {
+export function base32_string_to_binary_string(
+  string: string,
+  bits_len?: number,
+) {
   let bytes = base32_string_to_bytes(string, bits_len)
   let binary_string = bytes_to_binary_string(bytes)
   return binary_string

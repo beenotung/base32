@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import {
   binary_string_to_base32_string,
   base32_string_to_binary_string,
+  base32_string_to_bits,
 } from '../src/base32'
 
 it('e2e test', () => {
@@ -23,4 +24,21 @@ it('should output base32 in lower case', () => {
   let base32 = binary_string_to_base32_string('apple')
   expect(base32).to.match(/[a-z]/)
   expect(base32).not.to.match(/[A-Z]/)
+})
+
+describe('avoided characters', () => {
+  function test(char: string) {
+    it(`should reject "${char}"`, () => {
+      expect(() => base32_string_to_bits(char)).to.throw(
+        `Invalid character: "${char}"`,
+      )
+    })
+  }
+  test('0')
+  test('l')
+  test('v')
+  test('2')
+
+  test('L')
+  test('V')
 })
